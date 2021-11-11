@@ -1,5 +1,5 @@
 import jwt
-
+from fastapi.openapi.utils import get_openapi
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.hash import bcrypt
@@ -77,6 +77,11 @@ from typing import List
 @app.get("/users", response_model=List[User_Pydantic])
 async def get_all_users(user: User_Pydantic = Depends(get_current_user)):
     return await User_Pydantic.from_queryset(User.all())
+
+@app.get("/all_users", response_model=List[User_Pydantic])
+async def get_all_users_wa():
+    return await User_Pydantic.from_queryset(User.all())
+
 
 
 register_tortoise(
